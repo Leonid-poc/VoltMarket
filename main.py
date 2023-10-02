@@ -6,6 +6,19 @@ class App(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.tableWidget.clicked.connect(self.run)
+        pass
+    
+    def getTableText(self, x, y):
+        text = self.tableWidget.item(y, x)
+        if text == None: return text
+        return text.text()
+    
+    def run(self):
+        if any([self.tableWidget.item(self.tableWidget.rowCount() - 1, i) for i in range(self.tableWidget.columnCount())]):
+            self.tableWidget.insertRow(self.tableWidget.rowCount())
+        
+    
         
 # Проверка ошибок
 def except_hook(cls, exception, traceback):
