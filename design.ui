@@ -102,13 +102,13 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="0" colspan="2">
+    <item row="5" column="0" colspan="2">
      <widget class="QPushButton" name="pushButton">
       <property name="styleSheet">
        <string notr="true"/>
       </property>
       <property name="text">
-       <string>Скопировать</string>
+       <string>Скопировать данные</string>
       </property>
      </widget>
     </item>
@@ -137,6 +137,13 @@
      <widget class="QLabel" name="label">
       <property name="text">
        <string>Итого:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0" colspan="2">
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="text">
+       <string>Подвести итоги</string>
       </property>
      </widget>
     </item>
