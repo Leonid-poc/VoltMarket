@@ -8,6 +8,7 @@ class App(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         self.tableWidget.clicked.connect(self.run)
+        self.pushButton.clicked.connect(self.getTable)
         self.pushButton_2.clicked.connect(self.results)
         self.headers = ['Дата', 'Номер договора', 'УПД', 'Сумма документа', 'Неоплаченная часть', 'Дата оплаты по договору']
         pass
@@ -27,8 +28,16 @@ class App(QMainWindow, Ui_MainWindow):
         self.doubleSpinBox_2.setValue(col4)
 
     def getTable(self):
-        pass
-
+        array: list[list] = [[]]
+        for y in range(self.tableWidget.rowCount()):
+            for x in range(self.tableWidget.columnCount()):
+                temp: str = self.getTableText(x, y)
+                array[y].append(temp if temp else '')
+            array.append([])
+        array = list(filter(any, array))
+        array.insert(0, self.headers)
+        res = tabulate.tabulate(array, tablefmt='grid', headers='firstrow', numalign='center')
+        print(res)
 
     def run(self):
         if any([self.tableWidget.item(self.tableWidget.rowCount() - 1, i) for i in range(self.tableWidget.columnCount())]):
