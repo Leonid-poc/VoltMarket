@@ -26,6 +26,7 @@ class App(QMainWindow, Ui_MainWindow):
             col4 += float(self.getTableText(4, i).replace(',', '.') if self.getTableText(4, i) else 0)
         self.doubleSpinBox.setValue(col3)
         self.doubleSpinBox_2.setValue(col4)
+        return col3, col4
 
     def getTable(self):
         array: list[list] = [[]]
@@ -37,6 +38,12 @@ class App(QMainWindow, Ui_MainWindow):
         array = list(filter(any, array))
         array.insert(0, self.headers)
         res = tabulate.tabulate(array, tablefmt='grid', headers='firstrow', numalign='center')
+        columns = self.results()
+        res += f"""\n
+Итого:
+Сумма Документа: {columns[0]} рублей
+Неоплаченная часть: {columns[1]} рублей.
+"""
         print(res)
 
     def run(self):
