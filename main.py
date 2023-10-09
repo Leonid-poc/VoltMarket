@@ -37,7 +37,14 @@ class App(QMainWindow, Ui_MainWindow):
                 if not temp:
                     array[y].append('')
                     continue
-                if x in (3, 4):
+                if x in (0, 5):
+                    if temp.isdigit():
+                        a = ''
+                        for ind, elem in enumerate(temp):
+                            a += elem
+                            if ind in (1, 3): a += '.'
+                        temp = a
+                elif x in (3, 4):
                     temp = temp.replace('.', ',')
                     a, rub, kop = '', '', ''
                     count = 0
@@ -49,7 +56,7 @@ class App(QMainWindow, Ui_MainWindow):
                         a += i
                         count += 1
                         if not count % 3: a += ' '
-                    temp = a[::-1] + ',' if kop else '' + kop
+                    temp = a[::-1] +( ',' if kop else '') + kop
 
                 array[y].append(temp)
             array.append([])
