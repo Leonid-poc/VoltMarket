@@ -140,7 +140,7 @@
        <bool>true</bool>
       </property>
       <property name="maximum">
-       <double>9999999999.989999771118164</double>
+       <double>10000000000000000000.000000000000000</double>
       </property>
      </widget>
     </item>
@@ -150,7 +150,7 @@
        <bool>true</bool>
       </property>
       <property name="maximum">
-       <double>9999999999.989999771118164</double>
+       <double>10000000000000000000.000000000000000</double>
       </property>
      </widget>
     </item>
