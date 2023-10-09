@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from design import Ui_MainWindow
 import tabulate
+import pyperclip
 
 class App(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -33,18 +34,35 @@ class App(QMainWindow, Ui_MainWindow):
         for y in range(self.tableWidget.rowCount()):
             for x in range(self.tableWidget.columnCount()):
                 temp: str = self.getTableText(x, y)
-                array[y].append(temp if temp else '')
+                if not temp:
+                    array[y].append('')
+                    continue
+                if x in (3, 4):
+                    temp = temp.replace('.', ',')
+                    a, rub, kop = '', '', ''
+                    count = 0
+                    if ',' in temp:
+                        rub, kop = temp.split(',')
+                    else:
+                        rub = temp
+                    for i in rub[::-1]:
+                        a += i
+                        count += 1
+                        if not count % 3: a += ' '
+                    temp = a[::-1] + ',' if kop else '' + kop
+
+                array[y].append(temp)
             array.append([])
         array = list(filter(any, array))
         array.insert(0, self.headers)
-        res = tabulate.tabulate(array, tablefmt='grid', headers='firstrow', numalign='center')
+        res = tabulate.tabulate(array, tablefmt='html', headers='firstrow', numalign='center') # grid presto
         columns = self.results()
-        res += f"""\n
-Итого:
-Сумма Документа: {columns[0]} рублей
+        res += f"""<hr>
+Итого <br>
+Сумма Документа: {columns[0]} рублей. <br>
 Неоплаченная часть: {columns[1]} рублей.
 """
-        print(res)
+        pyperclip.copy(res)
 
     def run(self):
         if any([self.tableWidget.item(self.tableWidget.rowCount() - 1, i) for i in range(self.tableWidget.columnCount())]):
