@@ -29,6 +29,20 @@ class App(QMainWindow, Ui_MainWindow):
         self.doubleSpinBox_2.setValue(col4)
         return col3, col4
 
+    def triads(self, temp):
+        temp = str(temp).replace('.', ',')
+        a, rub, kop = '', '', ''
+        count = 0
+        if ',' in temp:
+            rub, kop = temp.split(',')
+        else:
+            rub = temp
+        for i in rub[::-1]:
+            a += i
+            count += 1
+            if not count % 3: a += ' '
+        return a[::-1] +( ',' if kop else '') + kop
+
     def getTable(self):
         array: list[list] = [[]]
         for y in range(self.tableWidget.rowCount()):
@@ -45,18 +59,7 @@ class App(QMainWindow, Ui_MainWindow):
                             if ind in (1, 3): a += '.'
                         temp = a
                 elif x in (3, 4):
-                    temp = temp.replace('.', ',')
-                    a, rub, kop = '', '', ''
-                    count = 0
-                    if ',' in temp:
-                        rub, kop = temp.split(',')
-                    else:
-                        rub = temp
-                    for i in rub[::-1]:
-                        a += i
-                        count += 1
-                        if not count % 3: a += ' '
-                    temp = a[::-1] +( ',' if kop else '') + kop
+                    temp = self.triads(temp)
 
                 array[y].append(temp)
             array.append([])
@@ -66,8 +69,8 @@ class App(QMainWindow, Ui_MainWindow):
         columns = self.results()
         res += f"""<hr>
 Итого <br>
-Сумма Документа: {columns[0]} рублей. <br>
-Неоплаченная часть: {columns[1]} рублей.
+Сумма Документа: {self.triads(columns[0])} рублей. <br>
+Неоплаченная часть: <b>{self.triads(columns[1])}</b> рублей.
 """
         pyperclip.copy(res)
 
