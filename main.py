@@ -84,14 +84,14 @@ class App(QMainWindow, Ui_MainWindow):
 def except_hook(cls, exception, traceback):
     sys.__excepthook__(cls, exception, traceback)
     
-data = [
-    ['id', 'name', 'number'],
-    [0, 'Jeff', 1234],
-    [1, 'Bob', 5678],
-    [2, 'Bill', 9123]
-]
-results = tabulate.tabulate(data, tablefmt='grid', headers='firstrow')
-print(results)
+# data = [
+#     ['id', 'name', 'number'],
+#     [0, 'Jeff', 1234],
+#     [1, 'Bob', 5678],
+#     [2, 'Bill', 9123]
+# ]
+# results = tabulate.tabulate(data, tablefmt='grid', headers='firstrow')
+# print(results)
 
 # Запуск приложения
 if __name__ == '__main__':
