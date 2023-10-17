@@ -65,13 +65,37 @@ class App(QMainWindow, Ui_MainWindow):
             array.append([])
         array = list(filter(any, array))
         array.insert(0, self.headers)
-        res = tabulate.tabulate(array, tablefmt='html', headers='firstrow', numalign='center') # grid presto
+        align = ['center', 'center', 'center', 'right', 'right', 'center']
+
         columns = self.results()
-        res += f"""<hr>
+        # res = tabulate.tabulate(array, tablefmt='html', headers='firstrow', numalign='center') # grid presto
+        res = f"""
+Уважаемый клиент! <br>
+Ознакомьтесь с информацией о задолженности {self.lineEdit.text()} перед ООО "Вольтмаркет" <br>
+<br>
+<table border style="font-family: Times New Roman">
+<thead>
+"""
+        for row in range(len(array)):
+            res += "<tr>"
+            for column in range(len(self.headers)):
+                res += f'''
+<t{"d" if row else "h"} style="text-align: {align[column]}{"; padding: 0px 20px" if column in (0, 1) else ""}" >{array[row][column]}</t{"d" if row else "h"}>
+'''
+            res += "</tr>"
+            if row == 0:
+                res += """
+</thead>
+<tbody>
+"""
+        res += f'''
+</tbody>
+</table>
+<hr>
 Итого <br>
 Сумма Документа: {self.triads(columns[0])} рублей. <br>
-Неоплаченная часть: <b>{self.triads(columns[1])}</b> рублей.
-"""
+Неоплаченная часть: <b style="font-size: 22px">{self.triads(columns[1])}</b> рублей.
+'''
         pyperclip.copy(res)
 
     def run(self):
