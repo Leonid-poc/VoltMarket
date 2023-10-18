@@ -94,7 +94,7 @@ class App(QMainWindow, Ui_MainWindow):
 <hr>
 Итого <br>
 Сумма Документа: {self.triads(columns[0])} рублей. <br>
-Неоплаченная часть: <b style="font-size: 22px">{self.triads(columns[1])}</b> рублей.
+Неоплаченная часть: <b style="font-size: 22px">{self.triads(columns[1])}</b> рублей.<br>
 '''
         pyperclip.copy(res)
 
